@@ -12,17 +12,19 @@ public partial class MoveToTagetLocation2DAction : Action
     [SerializeReference] public BlackboardVariable<Vector3> TargetLocation;
     [SerializeReference] public BlackboardVariable<float> Speed;
     [SerializeReference] public BlackboardVariable<float> StoppingDistance;
-    [SerializeReference] public BlackboardVariable<Animator> animator;
+    //Animator animator;
     Rigidbody2D rigidbody2D;
 
-    // Animator를 접근을 해서. SetBool 이동하라. Self GameObject Animator를 가져와서, animator 변수의 저장을 하고, Update true, Success, flase
+    const string run = "IsRun";
 
+    // Animator를 접근을 해서. SetBool 이동하라. Self GameObject Animator를 가져와서, animator 변수의 저장을 하고, Update true, Success, false
+    
     protected override Status OnStart()
     {
         if (Vector3.Distance(Self.Value.transform.position, TargetLocation.Value) < StoppingDistance)
         {
             return Status.Success;
-        }
+        }        
 
         // 몬스터에 rigidbody2d없으면 Status를 failure로 만들어주세요
         if(Self.Value.TryGetComponent<Rigidbody2D>(out Rigidbody2D rigid))
@@ -45,6 +47,9 @@ public partial class MoveToTagetLocation2DAction : Action
     {
         if (Vector3.Distance(Self.Value.transform.position, TargetLocation.Value) < StoppingDistance)
         {
+            //animator.SetBool(run, true);
+            //Self.Value.gameObject.GetComponent<Animator>();
+
             rigidbody2D.linearVelocity = Vector2.zero;
 
             return Status.Success;
