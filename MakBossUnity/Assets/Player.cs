@@ -9,8 +9,8 @@ public class Player : MonoBehaviour
 
     [Header("Jump")]
     [SerializeField] LayerMask groundMask;
-    [SerializeField] float JumpPower;
-    [SerializeField] float GroundCheckDistance;
+    [SerializeField] float jumpPower = 5f;
+    [SerializeField] float groundCheckDistance = 1f;
 
     private bool IsJump;
 
@@ -25,13 +25,13 @@ public class Player : MonoBehaviour
         controls.Player.Enable();
 
         controls.Player.Jump.performed += HandleJump;
-        controls.Player.Jump.performed += HandleJumpCancled;
+        controls.Player.Jump.canceled += HandleJumpCancled;
     }
 
     private void OnDisable()
     {
         controls.Player.Jump.performed -= HandleJump;
-        controls.Player.Jump.performed -= HandleJumpCancled;
+        controls.Player.Jump.canceled -= HandleJumpCancled;
         controls.Player.Disable();
     }
 
@@ -52,7 +52,7 @@ public class Player : MonoBehaviour
         if (IsGround() && !IsJump)
         {
             IsJump = true;
-            rd.AddForce(Vector2.up * JumpPower, ForceMode2D.Impulse); //transform.up 회전 방향으로, Vector2.up 항상위
+            rd.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse); //transform.up 회전 방향으로, Vector2.up 항상위
         }
     }
 
@@ -63,7 +63,7 @@ public class Player : MonoBehaviour
 
     private bool IsGround()
     {
-        return Physics2D.Raycast(transform.position, Vector2.down, GroundCheckDistance, groundMask); // 3을 GroundCheckDistance
+        return Physics2D.Raycast(transform.position, Vector2.down, groundCheckDistance, groundMask); // 3을 GroundCheckDistance
     }
 
     private void OnDrawGizmosSelected()
@@ -71,6 +71,6 @@ public class Player : MonoBehaviour
         Gizmos.color = Color.red;
 
         Gizmos.DrawLine(transform.position,
-            transform.position + (Vector3)(Vector2.down * GroundCheckDistance)); // new Vector3(0, -1*3, 0)
+            transform.position + (Vector3)(Vector2.down * groundCheckDistance)); // new Vector3(0, -1*3, 0)
     }
 }

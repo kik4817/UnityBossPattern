@@ -16,7 +16,7 @@ public partial class SetPlayerToTargetAction : Action
 
         if (player == null)
         {
-            Debug.Log("태그가 Player와 연계가 되어있지 않습니다.");
+            Debug.Log("태그가 Player인 객체가 없습니다.");
             return Status.Failure;
         }
 
