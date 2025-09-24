@@ -441,6 +441,8 @@ GameObject:
   - component: {fileID: 1873908169}
   - component: {fileID: 1873908171}
   - component: {fileID: 1873908170}
+  - component: {fileID: 1873908172}
+  - component: {fileID: 1873908173}
   m_Layer: 0
   m_Name: Mushroom
   m_TagString: Untagged
@@ -595,6 +597,8 @@ MonoBehaviour:
   m_BlackboardVariableOverridesList:
   - rid: 704451012093804808
   - rid: 6969229692930621695
+  - rid: 6969229714795790410
+  - rid: 6969229714795790536
   m_IsInitialised: 0
   m_IsStarted: 0
   references:
@@ -616,6 +620,54 @@ MonoBehaviour:
           m_Value1: 2737445537350048533
         Name: Speed
         m_Value: 1
+    - rid: 6969229714795790410
+      type: {class: 'BlackboardVariable`1[[ActionBehavior, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 3361436776164084291
+          m_Value1: 2431117858049751804
+        Name: Attack1
+        m_Value: {fileID: 1873908172}
+    - rid: 6969229714795790536
+      type: {class: 'BlackboardVariable`1[[ActionBehavior, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 6763178598187962834
+          m_Value1: 14037887041602552756
+        Name: Attack2
+        m_Value: {fileID: 1873908173}
+--- !u!114 &1873908172
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1873908165}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16ba4febd130fb14a8a460ca4baebd8a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsPatternEnd: 0
+  waitTimeForCharging: 1
+  projectilePrefab: {fileID: 135613665055808008, guid: 26427addfff2e1a4fb3416d0d8e4a998, type: 3}
+  projectileRange: 180
+  loopCount: 2
+  RightAngle: -60
+  LeftAngle: 150
+--- !u!114 &1873908173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1873908165}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40ce38a6b2ee8ce47b16929aea850ad6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsPatternEnd: 0
 --- !u!1 &2064431823
 GameObject:
   m_ObjectHideFlags: 0
