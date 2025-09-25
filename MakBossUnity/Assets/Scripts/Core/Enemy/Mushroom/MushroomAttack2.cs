@@ -16,4 +16,8 @@ public class MushroomAttack2 : ActionBehavior
         
     }
 
+    public override void OnStop()
+    {
+        base.OnStop();
+    }
 }

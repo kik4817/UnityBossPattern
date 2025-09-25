@@ -5,7 +5,7 @@ using Action = Unity.Behavior.Action;
 using Unity.Properties;
 
 [Serializable, GeneratePropertyBag]
-[NodeDescription(name: "PlayActionBehaver", story: "play [ActionBeahavior] .", category: "Action/Patern", id: "c5eed272e286a52bafed33b932b9104f")]
+[NodeDescription(name: "PlayActionBehavior", story: "play [ActionBeahavior] .", category: "Action/Patern", id: "c5eed272e286a52bafed33b932b9104f")]
 public partial class PlayActionBehaviorAction : Action
 {
     [SerializeReference] public BlackboardVariable<ActionBehavior> ActionBeahavior;
