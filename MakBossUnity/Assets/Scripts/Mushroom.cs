@@ -13,7 +13,15 @@ public class Mushroom : MonoBehaviour, IDamagable
     [SerializeField] int MaxHealth = 100;
     Animator animator;
 
+
     [field:SerializeField]public int CurrentHealth {  get; private set; }
+
+    public Action<bool> OnPatternStart;
+    public Action<string, bool> OnSomeFucStart;
+    public Action<int, int> OnHealthBarUpdate;
+
+    [SerializeField] ParticleSystem rageVFX; // 보스가 레이지모드가 되었을 때 발동하는 이펙트
+
 
     private void Awake()
     {
@@ -24,13 +32,22 @@ public class Mushroom : MonoBehaviour, IDamagable
     private void Start()
     {
         behaviorAgent.SetVariableValue<EnemyState>("EnemyState", EnemyState.Idle);//Set 세팅하다, Get 가져오다
-        behaviorAgent.SetVariableValue<Boolean>("IsPatternTrigger", true);
+        //behaviorAgent.SetVariableValue<Boolean>("IsPatternTrigger", true);
         CurrentHealth = MaxHealth;
+
+        OnHealthBarUpdate?.Invoke(CurrentHealth, MaxHealth);
     }
 
     public void TakeDamage(int damage)
     {
         CurrentHealth -= damage;
+
+        OnHealthBarUpdate?.Invoke(CurrentHealth, MaxHealth);
+
+        if(CurrentHealth < MaxHealth * 0.5f)
+        {
+            OnPatternStart?.Invoke(true);
+        }
 
         if(IsStun())
         {
@@ -81,5 +98,31 @@ public class Mushroom : MonoBehaviour, IDamagable
         {
             TakeDamage(10);
         }
+    }
+    private void OnEnable()
+    {
+        OnPatternStart += HandlePatternStart;
+        OnSomeFucStart += HandleSomeFucStart;
+    }
+
+
+    private void OnDisable()
+    {
+        OnPatternStart -= HandlePatternStart;
+        OnSomeFucStart -= HandleSomeFucStart;
+    }
+
+    private void HandlePatternStart(bool enable)
+    {
+        behaviorAgent.SetVariableValue<Boolean>("IsPatternTrigger", enable);        
+
+        if (rageVFX.isPlaying) {  return; }
+
+        rageVFX.Play();
+    }
+
+    private void HandleSomeFucStart(string methodName, bool enable)
+    {
+        behaviorAgent.SetVariableValue<Boolean>(methodName, enable);
     }
 }
