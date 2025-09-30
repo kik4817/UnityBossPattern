@@ -7,6 +7,8 @@ public class DealOnContact : MonoBehaviour
 
     [SerializeField] private int applyDamage = 5;
 
+    [SerializeField] private ParticleSystem[] contactVFX;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -21,7 +23,15 @@ public class DealOnContact : MonoBehaviour
             SetApplyDamage();
             damagable.TakeDamage(applyDamage);
 
-            Destroy(gameObject);
+            if (contactVFX != null)
+            {
+                foreach (var effect in contactVFX)
+                {
+                    effect.Play();
+                }
+            }
+
+            //Destroy(gameObject);
        }
 
 

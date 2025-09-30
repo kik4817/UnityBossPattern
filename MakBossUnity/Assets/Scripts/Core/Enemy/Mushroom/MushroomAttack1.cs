@@ -8,6 +8,7 @@ public class MushroomAttack1 : ActionBehavior
     Transform target;
     Animator animator;
     SpriteRenderer spriteRenderer;
+    AudioSource audioSource;
 
     [SerializeField] float waitTimeForCharging = 1f; // 차지 시간
     [SerializeField] GameObject projectilePrefab; // 투사체
@@ -15,11 +16,14 @@ public class MushroomAttack1 : ActionBehavior
     [SerializeField] int loopCount = 2; // 패턴 반복 횟수    
     [SerializeField] float RightAngle = -60f;
     [SerializeField] float LeftAngle = 150;
+    //[SerializeField] AudioClip fireSFX;
+
 
     private void Awake()
     {
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     public override void OnStart()
@@ -66,6 +70,8 @@ public class MushroomAttack1 : ActionBehavior
         for (int i = 0; i < loopCount; i++)
         {
             Fire();
+            audioSource.clip = Resources.Load<AudioClip>("Sound/Ice"); // Resources
+            audioSource.Play();
             yield return new WaitForSeconds(1f);
         }
 

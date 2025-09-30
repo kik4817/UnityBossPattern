@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IDamagable
 {
     public Controls controls;
     Rigidbody2D rd;
@@ -16,9 +16,15 @@ public class Player : MonoBehaviour
 
     public Action<bool> OnFire;
 
+    [SerializeField] public int CurrentHealth { get; set; }
+
+    //[SerializeField] AudioClip AudioClip;
+    AudioSource audioSource;
+
     private void Awake()
     {
         rd = GetComponent<Rigidbody2D>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void OnEnable()
@@ -61,6 +67,8 @@ public class Player : MonoBehaviour
         float dir = controls.Player.Move.ReadValue<float>();
 
         rd.linearVelocity = new Vector2(dir * 5, rd.linearVelocityY);
+
+        // audiosource 소스가 끝나고 난 후에 실행하도록 만드는 코드
     }
 
     private void HandleJump(InputAction.CallbackContext context)
@@ -68,6 +76,8 @@ public class Player : MonoBehaviour
         if (IsGround() && !IsJump)
         {
             IsJump = true;
+            audioSource.clip = Resources.Load<AudioClip>("Sound/Jump");
+            audioSource.Play();
             rd.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse); //transform.up 회전 방향으로, Vector2.up 항상위
         }
     }
@@ -88,5 +98,10 @@ public class Player : MonoBehaviour
 
         Gizmos.DrawLine(transform.position,
             transform.position + (Vector3)(Vector2.down * groundCheckDistance)); // new Vector3(0, -1*3, 0)
+    }
+
+    public void TakeDamage(int damage)
+    {
+        CurrentHealth -= damage;
     }
 }
